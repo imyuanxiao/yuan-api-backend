@@ -9,6 +9,6 @@ public class ApiNameConstant {
 
     public static final String QINGHUA = "qinghua";
 
-    
+
 
 }

@@ -11,8 +11,8 @@
     <groupId>com.imyuanxiao</groupId>
     <artifactId>yuan-api-client-sdk</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>yuan-api-client-sdk</name>
-    <description>yuan-api-client-sdk</description>
+    <name>Yuan-Api-client-sdk</name>
+    <description>Yuan-Api-client-sdk</description>
     <properties>
         <java.version>17</java.version>
     </properties>
