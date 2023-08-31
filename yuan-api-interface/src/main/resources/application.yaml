@@ -1,0 +1,14 @@
+
+server:
+  port: 8080
+
+
+# swagger config
+swagger:
+  title: YuanApi-Interface
+  description: API documentation for Yuan Api Interface.
+  version: 1.0.0
+
+# base-packages
+  packages:
+    controller: com.imyuanxiao.yuanapiinterface.controller
