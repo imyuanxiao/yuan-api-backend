@@ -1,0 +1,10 @@
+server:
+  port: 8082
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: forward-to-api
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**

@@ -7,6 +7,8 @@
         <option value="$PROJECT_DIR$/yuan-api-admin/pom.xml" />
         <option value="$PROJECT_DIR$/yuan-api-interface/pom.xml" />
         <option value="$PROJECT_DIR$/yuan-api-client-sdk/pom.xml" />
+        <option value="$PROJECT_DIR$/yuan-api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/yuan-api-common/pom.xml" />
       </list>
     </option>
   </component>
