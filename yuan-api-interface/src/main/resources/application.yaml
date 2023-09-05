@@ -1,6 +1,6 @@
 
 server:
-  port: 8080
+  port: 8081
 
 
 # swagger config
@@ -10,5 +10,5 @@ swagger:
   version: 1.0.0
 
 # base-packages
-  packages:
-    controller: com.imyuanxiao.yuanapiinterface.controller
+packages:
+  controller: com.imyuanxiao.yuanapiinterface.controller
