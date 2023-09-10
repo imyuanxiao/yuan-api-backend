@@ -6,7 +6,6 @@ import com.imyuanxiao.yuanapicommon.model.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.lang.reflect.Field;
 
@@ -15,8 +14,7 @@ import java.lang.reflect.Field;
  * @author: <a href="https://github.com/imyuanxiao">imyuanxiao</a>
  **/
 @Slf4j
-@RestControllerAdvice
-public class ExceptionControllerAdvice {
+public class CommonExceptionControllerAdvice {
 
     /**
      * 处理自定义的ApiException异常

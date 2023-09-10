@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * <a href="http://localhost:8080/swagger-ui/index.html">swagger</a>
  **/
 @Configuration
-//@EnableSwagger2
 public class SwaggerConfig {
-
 
     @Value("${packages.controller}")
     private String controllerPackages;

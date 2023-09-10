@@ -1,12 +1,10 @@
 package com.imyuanxiao.yuanapiinterface.controller;
 
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.URLUtil;
+import com.imyuanxiao.yuanapicommon.enums.ResultCode;
+import com.imyuanxiao.yuanapicommon.exception.ApiException;
 import io.swagger.annotations.Api;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class InnerApiController {
 
     @GetMapping("/getName")
-    public String getUsername(String name, HttpServletRequest request) {
+    public String getUsername(String name) {
         System.out.println(name);
         return "你的名字是：" + name;
+    }
+
+    @GetMapping("/exception")
+    public void testExceprion() {
+        throw new ApiException(ResultCode.FAILED);
     }
 
 }
