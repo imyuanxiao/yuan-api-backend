@@ -1,6 +1,9 @@
 ### target ###
 /yuan-api-admin/target/
-
+/yuan-api-client-sdk/target/
+/yuan-api-common/target/
+/yuan-api-gateway/target/
+/yuan-api-interface/target/
 
 ### IntelliJ IDEA ###
 .idea
