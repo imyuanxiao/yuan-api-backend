@@ -8,5 +8,5 @@ public interface InnerInterfaceService {
      *
      * @return Interface 接口信息
      */
-    Interface getInterface(long id, String url, String method, String path);
+    Interface getInterface(Long id, String url, String method, String path);
 }

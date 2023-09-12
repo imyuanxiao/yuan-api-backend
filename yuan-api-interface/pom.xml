@@ -18,7 +18,7 @@
     </properties>
     <dependencies>
 
-        <!-- 自制常用类 -->
+        <!-- 公共项目 -->
         <dependency>
             <groupId>com.imyuanxiao</groupId>
             <artifactId>yuan-api-common</artifactId>

@@ -1,12 +1,12 @@
 package com.imyuanxiao.yuanapicommon.exception;
 
 import com.imyuanxiao.yuanapicommon.enums.ResultCode;
-import lombok.Getter;
+import lombok.Data;
 
 /**
  * @author: <a href="https://github.com/imyuanxiao">imyuanxiao</a>
  */
-@Getter
+@Data
 public class ApiException extends RuntimeException{
 
     private ResultCode resultCode;
@@ -18,6 +18,7 @@ public class ApiException extends RuntimeException{
     }
 
     public ApiException(ResultCode resultCode) {
+        super(resultCode.getMsg());
         this.resultCode = resultCode;
         this.msg = resultCode.getMsg();
     }

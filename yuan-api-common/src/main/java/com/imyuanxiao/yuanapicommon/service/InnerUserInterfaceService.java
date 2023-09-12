@@ -1,17 +1,40 @@
 package com.imyuanxiao.yuanapicommon.service;
 
+import com.imyuanxiao.yuanapicommon.model.entity.User;
 import com.imyuanxiao.yuanapicommon.model.entity.UserInterface;
 
 public interface InnerUserInterfaceService {
 
+//    /**
+//     * 通过accessKey查看是否已分配用户
+//     * @param accessKey accessKey
+//     * @return User 用户信息
+//     */
+//    User getInvokeUser(String accessKey);
+
+    /**
+     * 通过accessKey查看是否已分配用户
+     * @param accessKey accessKey
+     * @return 用户接口关系
+     */
+    UserInterface getInvokeUserInterface(String accessKey);
+
+
+//    /**
+//     * 通过accessKey查看是否有对应的secretKey
+//     * @param accessKey accessKey
+//     * @return secretKey
+//     */
+//    String getSecretKey(String accessKey);
+
     /**
      * 调用接口统计
      *
-     * @param interfaceInfoId 接口ID
+     * @param interfaceId 接口ID
      * @param userId          用户ID
      * @return boolean 是否执行成功
      */
-    boolean invokeCount(long interfaceInfoId, long userId);
+    boolean subCallNum(long interfaceId, long userId);
 
     /**
      * 是否还有调用次数，其实就是在查对应接口用户关系表
@@ -20,23 +43,7 @@ public interface InnerUserInterfaceService {
      * @param userId      用户id
      * @return UserInterfaceInfo 用户接口信息
      */
-    UserInterface hasLeftNum(Long interfaceId, Long userId);
+    boolean hasLeftNum(Long interfaceId, Long userId);
 
-    /**
-     * 添加默认的用户接口信息
-     *
-     * @param interfaceId 接口id
-     * @param userId      用户id
-     * @return Boolean 是否添加成功
-     */
-    Boolean addDefaultUserInterfaceInfo(Long interfaceId, Long userId);
-
-    /**
-     * 检查用户是否有接口
-     *
-     * @param interfaceId 接口id
-     * @param userId     用户id
-     * @return UserInterfaceInfo 用户接口信息
-     */
 
 }

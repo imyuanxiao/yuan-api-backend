@@ -5,7 +5,7 @@ import cn.hutool.crypto.digest.Digester;
 
 public class SignUtil {
     /**
-     * 生成签名
+     * 由secretKey生成签名
      * @param body
      * @param secretKey
      * @return

@@ -12,6 +12,9 @@ public enum ResultCode {
     //操作成功
     SUCCESS(0, "操作成功"),
 
+    // 请求头
+    HEADER_ERROR(1000, "请求头校验错误"),
+
     // 参数校验相关
     PARAMS_ERROR(40000, "请求参数错误"),
     VALIDATE_FAILED(1006, "参数校验失败"),
@@ -48,7 +51,6 @@ public enum ResultCode {
     // 其他错误
     FAILED(2001, "操作失败"),
     DATABASE_ERROR(2002, "数据库操作异常"),
-
     ERROR(5000, "未知错误");
 
     private int code;

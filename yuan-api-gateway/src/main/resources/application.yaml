@@ -8,3 +8,16 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/**
+
+# dubbo 消费者
+dubbo:
+  application:
+    name: dubbo-consumer
+  consumer:
+    timeout: -1 # 设置为负数表示不超时
+  protocol:
+    name: dubbo
+    port: 20881
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848

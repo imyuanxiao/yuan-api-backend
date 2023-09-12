@@ -11,7 +11,7 @@ public class HeaderConstant {
     /**
      * 调用接口的id
      */
-    public static final String API_ID = "id";
+    public static final String INTERFACE_ID = "interfaceId";
     /**
      * 随机数，使用后失效，保证接口只能使用一次
      */

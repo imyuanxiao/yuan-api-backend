@@ -8,7 +8,6 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.imyuanxiao.yuanapiclientsdk.config.YuanApiClientFactory;
 import com.imyuanxiao.yuanapiclientsdk.utils.HeaderConstant;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -45,7 +44,7 @@ public class YuanApiManager {
 
         hashMap.put(HeaderConstant.ACCESSKEY, apiClient.getAccessKey());
         // 接口ID
-        hashMap.put(HeaderConstant.API_ID, String.valueOf(id));
+        hashMap.put(HeaderConstant.INTERFACE_ID, String.valueOf(id));
         // 一定不能直接发送
         // hashMap.put("secretKey", secretKey);
         // 只能一次请求只能调用一次接口，用后请求作废
@@ -72,7 +71,7 @@ public class YuanApiManager {
      * @param method 接口使用方法
      * @return 接口调用结果
      */
-    public String invokeInterface(String apiName, long id,String params, String url, String method,String path)  {
+    public String invokeInterface(String apiName, long id, String params, String url, String method,String path)  {
         String result;
         log.info("SDK正在转发至GATEWAY_HOST:{}",GATEWAY_HOST);
         try(
