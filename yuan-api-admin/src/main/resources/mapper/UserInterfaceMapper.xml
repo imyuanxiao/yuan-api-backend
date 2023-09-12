@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imyuanxiao.yuanapiadmin.mapper.UserInterfaceMapper">
+
+    <resultMap id="BaseResultMap" type="com.imyuanxiao.yuanapicommon.model.entity.UserInterface">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="interfaceId" column="interface_id" jdbcType="BIGINT"/>
+            <result property="accessKey" column="access_key" jdbcType="VARCHAR"/>
+            <result property="secretKey" column="secret_key" jdbcType="VARCHAR"/>
+            <result property="leftNum" column="left_num" jdbcType="INTEGER"/>
+            <result property="totalNum" column="total_num" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,interface_id,
+        access_key,secret_key,left_num,
+        total_num,status,updated_time,
+        created_time,is_deleted
+    </sql>
+
+<!--
+    <select id="pageInterface" resultType="com.imyuanxiao.yuanapiadmin.model.vo.UserInterfacePageVO">
+        select
+            id, name, description, left_num as leftNum, total_num as totalNum, access_key as accessKey, secret_key as secretKey, status
+        from
+            user_interface
+                ${ew.customSqlSegment}
+    </select>
+-->
+
+    <select id="pageInterface" resultType="com.imyuanxiao.yuanapiadmin.model.vo.UserInterfacePageVO">
+        SELECT
+            i.id,
+            i.name,
+            i.description,
+            ui.left_num AS leftNum,
+            ui.total_num AS totalNum,
+            ui.access_key AS accessKey,
+            ui.secret_key AS secretKey,
+            ui.status
+        FROM
+            user_interface ui
+                INNER JOIN
+            interface i ON ui.interface_id = i.id
+            ${ew.customSqlSegment}
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imyuanxiao.yuanapiadmin.mapper.InterfaceMapper">
+
+    <resultMap id="BaseResultMap" type="com.imyuanxiao.yuanapicommon.model.entity.Interface">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="requestParam" column="request_param" jdbcType="OTHER"/>
+            <result property="requestParamRemark" column="request_param_remark" jdbcType="OTHER"/>
+            <result property="responseParamRemark" column="response_param_remark" jdbcType="OTHER"/>
+            <result property="requestHeader" column="request_header" jdbcType="OTHER"/>
+            <result property="responseHeader" column="response_header" jdbcType="OTHER"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="method" column="method" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="createdTime" column="created_time" jdbcType="DATE"/>
+            <result property="updatedTime" column="updated_time" jdbcType="DATE"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,description,
+        path,url,request_param,
+        request_param_remark,response_param_remark,request_header,
+        response_header,status,method,
+        updated_time,created_time,user_id,
+        is_deleted
+    </sql>
+
+    <select id="pageInterface" resultType="com.imyuanxiao.yuanapiadmin.model.vo.InterfacePageVO">
+        select
+            id, name, description, method, status, created_time as createdTime
+        from
+            interface
+                ${ew.customSqlSegment}
+    </select>
+
+</mapper>
