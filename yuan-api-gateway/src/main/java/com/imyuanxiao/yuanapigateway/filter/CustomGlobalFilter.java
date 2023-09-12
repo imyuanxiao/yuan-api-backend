@@ -151,8 +151,16 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 
         log.info("接口校验完毕，准备转发请求！");
         Long userId = invokeUserInterface.getUserId();
+
+        // 创建修改后的请求对象并设置染色头信息
+        ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+                .header(DYE_DATA_HEADER, DYE_DATA_VALUE)
+                .build();
+        // 使用修改后的请求对象继续请求处理
+        ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
+
         // 5. 请求转发，调用模拟接口
-        return chain.filter(exchange)
+        return chain.filter(modifiedExchange)
                 .then(Mono.fromRunnable(() -> {
                     // 在响应被发送到客户端之前执行的逻辑
                     ServerHttpResponse response = exchange.getResponse();
