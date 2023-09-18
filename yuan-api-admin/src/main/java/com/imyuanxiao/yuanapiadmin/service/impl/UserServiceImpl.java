@@ -3,6 +3,9 @@ package com.imyuanxiao.yuanapiadmin.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.imyuanxiao.yuanapiadmin.model.param.UserPasswordParam;
+import com.imyuanxiao.yuanapiadmin.model.param.UserProfileParam;
+import com.imyuanxiao.yuanapiadmin.utils.UserHolder;
 import com.imyuanxiao.yuanapicommon.enums.ResultCode;
 import com.imyuanxiao.yuanapicommon.exception.ApiException;
 import com.imyuanxiao.yuanapicommon.model.entity.User;
@@ -53,10 +56,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             return ACTION_SUCCESSFUL;
         } catch (Exception e) {
-            throw new ApiException(ResultCode.FAILED, "Account is already in use.");
+            throw new ApiException(ResultCode.FAILED, "用户名已存在！");
         }
     }
-
 
     @Override
     public LoginResponseVO login(LoginRequestParam param) {
@@ -66,26 +68,55 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .eq(StrUtil.isNotBlank(username), User::getUsername, username)
                 .one();
         if (userResult == null || !securityUtil.matches(param.getPassword(), userResult.getPassword())) {
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "Username or password is incorrect！");
+            throw new ApiException(ResultCode.VALIDATE_FAILED, "用户名或密码错误！");
         }
 
         // If state is abnormal
         if (userResult.getStatus() != CommonConst.USER_STATUS_NORMAL) {
             throw new ApiException(ResultCode.ACCOUNT_STATE_DISABLED);
         }
-
-        // Put user basic info, profile, token, permissions in UserVO object
-        UserVO userVO = getUserVO(userResult);
-
-        // Generate token
-        String token = JwtManager.generate(userResult.getUsername(), userResult.getId());
-
-        // return loginResponse
-        return new LoginResponseVO().setUserVO(userVO).setToken(token);
+        return new LoginResponseVO().setToken(JwtManager.generate(userResult.getUsername(), userResult.getId()));
     }
 
+    @Override
+    public void updateProfile(UserProfileParam param) {
 
-    private UserVO getUserVO(User user) {
+        boolean update = this.lambdaUpdate().eq(User::getId, param.getId())
+                .set(StrUtil.isNotBlank(param.getUsername()), User::getUsername, param.getUsername())
+                .set(StrUtil.isNotBlank(param.getPhone()), User::getPhone, param.getPhone())
+                .set(StrUtil.isNotBlank(param.getEmail()), User::getEmail, param.getEmail())
+                .update();
+        if(!update){
+            throw new ApiException(ResultCode.FAILED);
+        }
+
+        if(StrUtil.isNotBlank(param.getNickName())){
+            UserProfile userProfile = new UserProfile().setUserId(param.getId()).setNickName(param.getNickName());
+            boolean result = userProfileService.updateByUserId(userProfile);
+            if(!result){
+                throw new ApiException(ResultCode.FAILED);
+            }
+        }
+
+    }
+
+    @Override
+    public void updatePassword(UserPasswordParam param) {
+        Long userId = UserHolder.getUser().getId();
+        // 检查旧密码
+        User user = this.getById(userId);
+        boolean matches = securityUtil.matches(param.getOldPassword(), user.getPassword());
+        if(!matches){
+            throw new ApiException(ResultCode.FAILED,"原密码错误！");
+        }
+        // 更新新密码
+        boolean update = this.lambdaUpdate().eq(User::getId, userId).set(User::getPassword, securityUtil.encodePassword(param.getNewPassword())).update();
+        if(!update){
+            throw new ApiException(ResultCode.FAILED);
+        }
+    }
+
+    public UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         // Copy basic info
         BeanUtil.copyProperties(user, userVO);
@@ -103,7 +134,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtil.copyProperties(userProfile, userVO, "id", "userID");
         return userVO;
     }
-
 
 
 }

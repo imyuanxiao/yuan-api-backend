@@ -48,7 +48,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         String userID = JwtManager.extractUserID(token);
         // 获取用户信息，存入userHolder
         User user = userService.getById(userID);
-        UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
+        UserVO userVO = userService.getUserVO(user);
         UserHolder.saveUser(userVO);
         return true;
     }

@@ -1,17 +1,12 @@
 package com.imyuanxiao.yuanapiadmin.model.param;
 
-import com.imyuanxiao.yuanapiadmin.utils.ValidationGroups;
+import com.alibaba.nacos.shaded.javax.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public class InterfaceRequestParam {
 
-    /**
-     * 0-add, 1-update, 2-
-     */
-    private Integer type;
-
-    // @NotNull(message = "UserID is required.", groups = ValidationGroups.UpdateInterface.class)
     private Long id;
 
     @NotBlank(message = "Interface name is required.")
@@ -20,11 +15,14 @@ public class InterfaceRequestParam {
     @NotBlank(message = "Interface description is required.")
     private String description;
 
-    @NotBlank(message = "Interface path is required.")
-    private String path;
+    @NotBlank(message = "Interface method is required.")
+    private String method;
 
     @NotBlank(message = "Interface url is required.")
     private String url;
+
+    @NotBlank(message = "Interface path is required.")
+    private String path;
 
     private Object requestParam;
 
@@ -35,10 +33,5 @@ public class InterfaceRequestParam {
     private Object requestHeader;
 
     private Object responseHeader;
-
-    private Integer status;
-
-    @NotBlank(message = "Interface method is required.")
-    private String method;
 
 }

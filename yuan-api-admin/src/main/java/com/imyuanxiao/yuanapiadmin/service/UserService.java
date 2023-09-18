@@ -1,5 +1,8 @@
 package com.imyuanxiao.yuanapiadmin.service;
 
+import com.imyuanxiao.yuanapiadmin.model.param.UserPasswordParam;
+import com.imyuanxiao.yuanapiadmin.model.param.UserProfileParam;
+import com.imyuanxiao.yuanapiadmin.model.vo.UserVO;
 import com.imyuanxiao.yuanapicommon.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.imyuanxiao.yuanapiadmin.model.param.LoginRequestParam;
@@ -23,4 +26,8 @@ public interface UserService extends IService<User> {
      * @param param Login form parameters
      **/
     LoginResponseVO login(LoginRequestParam param);
+
+    void updateProfile(UserProfileParam param);
+
+    void updatePassword(UserPasswordParam param);
 }

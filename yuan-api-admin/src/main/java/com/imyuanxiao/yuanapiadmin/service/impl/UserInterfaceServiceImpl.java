@@ -50,7 +50,7 @@ public class UserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapper, U
                     .setLeftNum(DEFAULT_INTERFACE_CALL_NUM).setTotalNum(DEFAULT_INTERFACE_CALL_NUM);
             try {
                 this.save(userInterface);
-                return ACTION_SUCCESSFUL;
+                return APPLY_SUCCESSFUL;
             } catch (Exception e) {
                 throw new ApiException(ResultCode.FAILED);
             }
@@ -59,78 +59,30 @@ public class UserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapper, U
         // 接口存在
         // 接口状态为禁用
         if(currentUserInterface.getStatus().equals(USER_INTERFACE_STATUS_DISABLED)){
-            throw new ApiException(ResultCode.USER_INTERFACE_DISABLED);
+            throw new ApiException(ResultCode.FAILED, ALREADY_APPLIED);
         }
 
-        return ALREADY_APPLIED;
+        return "您已申请过该接口，无需再次申请开通！";
     }
-
-    //todo 改为加
-    @Override
-    public String setCallNum(Long interfaceId, Integer type) {
-
-        Long userId = UserHolder.getUser().getId();
-        UserInterface currentUserInterface = this.lambdaQuery().eq(UserInterface::getUserId, userId).eq(UserInterface::getInterfaceId, interfaceId).one();
-        if(currentUserInterface == null){
-            throw new ApiException(ResultCode.USER_INTERFACE_NOT_APPLIED);
-        }
-
-        if(currentUserInterface.getStatus().equals(USER_INTERFACE_STATUS_DISABLED)){
-            throw new ApiException(ResultCode.USER_INTERFACE_DISABLED);
-        }
-        try {
-            if(type.equals(USER_INTERFACE_CALL_NUM_ADD)){
-                this.lambdaUpdate().eq(UserInterface::getInterfaceId, interfaceId).eq(UserInterface::getUserId, userId)
-                        .set(UserInterface::getLeftNum, currentUserInterface.getLeftNum() + DEFAULT_INTERFACE_CALL_NUM)
-                        .set(UserInterface::getTotalNum, currentUserInterface.getTotalNum() + DEFAULT_INTERFACE_CALL_NUM)
-                        .update();
-            }
-            if(type.equals(USER_INTERFACE_CALL_NUM_SUB)) {
-                Integer leftNum = currentUserInterface.getLeftNum();
-                if(leftNum > 0){
-                    leftNum--;
-                }
-                this.lambdaUpdate().eq(UserInterface::getInterfaceId, interfaceId).eq(UserInterface::getUserId, userId)
-                        .set(UserInterface::getLeftNum, leftNum).update();
-            }
-            return ACTION_SUCCESSFUL;
-        } catch (Exception e) {
-            throw new ApiException(ResultCode.FAILED);
-        }
-    }
-
 
     @Override
     public IPage<UserInterfacePageVO> pageUserInterface(InterfacePageParam param) {
+        Long currentUserId = UserHolder.getUser().getId();
+
         Page<UserInterfacePageVO> page = new Page<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setColumn("id");
         page.setCurrent(param.getCurrent()).setSize(param.getPageSize()).addOrder(orderItem);
         QueryWrapper<UserInterfacePageVO> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StrUtil.isNotBlank(param.getName()), "i.name", param.getName())
-                .like(StrUtil.isNotBlank(param.getDescription()), "i.description", param.getDescription());
-
+                .like(StrUtil.isNotBlank(param.getDescription()), "i.description", param.getDescription())
+                .eq("ui.user_id",currentUserId);
         try {
             IPage<UserInterfacePageVO> result = baseMapper.pageInterface(page, queryWrapper);
             return result;
         } catch (Exception e) {
             throw new ApiException(ResultCode.FAILED);
         }
-
-    }
-
-    @Override
-    public boolean checkAuth(Long interfaceId, String accessKey, String secretKey) {
-        UserInterface one = this.lambdaQuery().eq(UserInterface::getId, interfaceId)
-                .eq(UserInterface::getAccessKey, accessKey)
-                .eq(UserInterface::getSecretKey, secretKey).one();
-        if(one == null){
-            throw new ApiException(ResultCode.USER_INTERFACE_NOT_APPLIED);
-        }
-        if(one.getStatus().equals(USER_INTERFACE_STATUS_DISABLED)){
-            throw new ApiException(ResultCode.USER_INTERFACE_DISABLED);
-        }
-        return true;
     }
 
 }

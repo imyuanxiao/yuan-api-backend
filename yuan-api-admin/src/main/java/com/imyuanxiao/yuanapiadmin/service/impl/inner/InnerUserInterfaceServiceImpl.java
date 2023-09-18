@@ -32,18 +32,6 @@ public class InnerUserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapp
     @Autowired
     private UserServiceImpl userService;
 
-//    @Override
-//    public User getInvokeUser(String accessKey) {
-//        try {
-//            Long userId = this.lambdaQuery()
-//                    .eq(UserInterface::getAccessKey, accessKey).one()
-//                    .getUserId();
-//            return userService.getById(userId);
-//        } catch (Exception e) {
-//            throw new ApiException(ResultCode.FAILED);
-//        }
-//    }
-
     @Override
     public UserInterface getInvokeUserInterface(String accessKey) {
         try {
@@ -69,17 +57,6 @@ public class InnerUserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapp
             throw new ApiException(ResultCode.FAILED);
         }
     }
-
-//    @Override
-//    public String getSecretKey(String accessKey) {
-//        try {
-//            return this.lambdaQuery()
-//                    .eq(UserInterface::getAccessKey, accessKey).one()
-//                    .getSecretKey();
-//        } catch (Exception e) {
-//            throw new ApiException(ResultCode.FAILED);
-//        }
-//    }
 
     @Override
     public boolean subCallNum(long interfaceId, long userId) {

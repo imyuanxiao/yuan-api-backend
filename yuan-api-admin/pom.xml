@@ -27,6 +27,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- SDK -->
+        <dependency>
+            <groupId>com.imyuanxiao</groupId>
+            <artifactId>yuan-api-client-sdk</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- nacos dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

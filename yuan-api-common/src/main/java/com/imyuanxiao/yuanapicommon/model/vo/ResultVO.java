@@ -13,9 +13,9 @@ public class ResultVO<T> {
 
     private boolean success;
 
-    private int errorCode;
+    private int code;
 
-    private String errorMessage;
+    private String message;
 
     private T data;
 
@@ -25,25 +25,25 @@ public class ResultVO<T> {
     }
 
     public ResultVO(ResultCode resultCode, T data) {
-        this.errorCode = resultCode.getCode();
-        this.errorMessage = resultCode.getMsg();
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMsg();
         this.data = data;
     }
 
     public ResultVO(int code, String message, T data) {
-        this.errorCode = code;
-        this.errorMessage = message;
+        this.code = code;
+        this.message = message;
         this.data = data;
     }
 
     public ResultVO(ExceptionCode annotation, T data) {
-        this.errorCode = annotation.value();
-        this.errorMessage = annotation.message();
+        this.code = annotation.value();
+        this.message = annotation.message();
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return String.format("{\"code\":%d,\"msg\":\"%s\",\"data\":\"%s\"}", errorCode, errorMessage, data.toString());
+        return String.format("{\"code\":%d,\"msg\":\"%s\",\"data\":\"%s\"}", code, message, data.toString());
     }
 }

@@ -27,7 +27,7 @@ public class InnerInterfaceServiceImpl extends ServiceImpl<InterfaceMapper, Inte
                     .eq(Interface::getUrl, url)
                     .eq(Interface::getId, id)
                     .eq(Interface::getMethod, method)
-                    .eq(Interface::getPath, path.replaceFirst("/api", "")).one();
+                    .eq(Interface::getPath, path).one();
             // 接口是否存在或异常
             if(targetInterface == null || targetInterface.getStatus().equals(CommonConst.INTERFACE_STATUS_OFFLINE)){
                 throw new ApiException(ResultCode.FAILED, "接口不存在或已关闭！");

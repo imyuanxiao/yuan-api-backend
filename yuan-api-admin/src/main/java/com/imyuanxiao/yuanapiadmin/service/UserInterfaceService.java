@@ -15,9 +15,6 @@ public interface UserInterfaceService extends IService<UserInterface> {
 
     String apply(Long id);
 
-    String setCallNum(Long id, Integer type);
-
     IPage<UserInterfacePageVO> pageUserInterface(InterfacePageParam param);
 
-    boolean checkAuth(Long id, String accessKey, String secretKey);
 }

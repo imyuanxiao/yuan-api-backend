@@ -18,7 +18,7 @@ public class SecurityUtil {
     }
 
 
-    public boolean matches(String password, String password1) {
-        return encodePassword(password).equals(password1);
+    public boolean matches(String password, String passwordEncoded) {
+        return encodePassword(password).equals(passwordEncoded);
     }
 }

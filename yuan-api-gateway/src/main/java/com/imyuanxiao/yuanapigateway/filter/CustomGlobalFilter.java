@@ -107,17 +107,17 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // 3. 时间戳 和 当前时间不能超过 5 分钟 (300000毫秒)
-//        long currentTimeMillis = System.currentTimeMillis() / 1000;
-//        long difference = currentTimeMillis - Long.parseLong(timestamp);
-//        if (Math.abs(difference) > 300000) {
-//            return handleException(exchange, new ApiException(ResultCode.FAILED, "请求超时！"));
-//        }
+        long currentTimeMillis = System.currentTimeMillis() / 1000;
+        long difference = currentTimeMillis - Long.parseLong(timestamp);
+        if (Math.abs(difference) > 300000) {
+            return handleException(exchange, new ApiException(ResultCode.FAILED, "请求超时！"));
+        }
 
-        // todo 判断随机数是否存在，防止重放攻击，随机数放在redis内，使用一次即销毁
+        // 判断随机数是否存在，防止重放攻击，随机数放在redis内，使用一次即销毁
 //        String key = KEY_PREFFIX + nonce;
 //        String existNonce = (String) redisTemplate.opsForValue().get(key);
 //        if (StrUtil.isNotBlank(existNonce)) {
-//            throw new RuntimeException("请求重复！");
+//            抛出异常
 //        }
 
         // 4. 用户鉴权及接口校验
@@ -136,10 +136,10 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         String secretKey = invokeUserInterface.getSecretKey();
         log.info("网关得到SecretKey：{}", secretKey);
         String serverSign = SignUtil.genSign(body, secretKey);
-//        if (!sign.equals(serverSign)) {
-//            return handleException(exchange,  new ApiException(ResultCode.FAILED, "签名错误！"));
-//        }
-//
+        if (!sign.equals(serverSign)) {
+            return handleException(exchange,  new ApiException(ResultCode.FAILED, "签名错误！"));
+        }
+
         Long interfaceId = Long.parseLong(interfaceIdStr);
         // 4.3 校验接口是否存在
         try {

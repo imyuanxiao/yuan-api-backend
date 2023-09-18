@@ -2,8 +2,10 @@ package com.imyuanxiao.yuanapiadmin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.imyuanxiao.yuanapiadmin.model.param.InterfacePageParam;
+import com.imyuanxiao.yuanapiadmin.model.param.InvokeInterfaceParam;
 import com.imyuanxiao.yuanapiadmin.model.vo.UserInterfacePageVO;
 import com.imyuanxiao.yuanapiadmin.service.impl.UserInterfaceServiceImpl;
+import com.imyuanxiao.yuanapiclientsdk.client.YuanApiManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,18 +36,6 @@ public class UserInterfaceController {
     }
 
     /**
-     * 改变调用次数
-     * @param id
-     * @param type 0-加500次 1-减1次
-     * @return
-     */
-    @GetMapping("/setCallNum/{type}/{id}")
-    @ApiOperation(value = "设置接口调用次数")
-    public String setCallNum(@PathVariable("type") Integer type, @PathVariable("id") Long id){
-        return userInterfaceService.setCallNum(id, type);
-    }
-
-    /**
      * 分页获取已申请接口信息
      * @param param
      * @return
@@ -56,16 +46,21 @@ public class UserInterfaceController {
     }
 
     /**
-     * 根据request的accessKey和secretKey判断用户是否有权调用接口
-     * @param id
-     * @param request
+     * 在线调用接口
+     * @param param
      * @return
      */
-    @GetMapping("/checkAuth/{id}")
-    public boolean checkAuth(@PathVariable("id") Long id, HttpServletRequest request){
-        String accessKey = request.getAttribute("accessKey").toString();
-        String secretKey = request.getAttribute("secretKey").toString();
-        return userInterfaceService.checkAuth(id, accessKey, secretKey);
+    @PostMapping("/invokeInterface")
+    public String onlineInvokeInterface(@RequestBody InvokeInterfaceParam param){
+        String result = new YuanApiManager().invokeInterface(
+                param.getAccessKey(),
+                param.getSecretKey(),
+                param.getId(),
+                param.getMethod(),
+                param.getUrl(),
+                param.getPath(),
+                param.getRequestParams());
+        return result;
     }
 
 }

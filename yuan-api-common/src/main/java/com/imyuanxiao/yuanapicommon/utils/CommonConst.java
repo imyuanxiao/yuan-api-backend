@@ -11,8 +11,9 @@ public class CommonConst {
     public static final int USER_STATUS_NORMAL = 0;
     public static final int USER_STATUS_DISABLED = 1;
 
-    public static final String ACTION_SUCCESSFUL = "Action successful.";
-    public static final String ALREADY_APPLIED = "Already applied.";
+    public static final String ACTION_SUCCESSFUL = "操作成功！";
+    public static final String APPLY_SUCCESSFUL = "申请成功！";
+    public static final String ALREADY_APPLIED = "您已经申请过该接口，无需再次申请。";
 
 
 

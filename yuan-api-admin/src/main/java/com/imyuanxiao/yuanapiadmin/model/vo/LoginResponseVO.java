@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LoginResponseVO {
 
-    UserVO userVO;
+    // UserVO userVO;
     String token;
 
 }

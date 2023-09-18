@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.imyuanxiao.yuanapiadmin.annotation.AuthCheck;
 import com.imyuanxiao.yuanapiadmin.model.param.InterfacePageParam;
 import com.imyuanxiao.yuanapiadmin.model.param.InterfaceRequestParam;
+import com.imyuanxiao.yuanapiadmin.model.param.InterfaceSetStatusParam;
 import com.imyuanxiao.yuanapiadmin.model.vo.InterfacePageVO;
 import com.imyuanxiao.yuanapiadmin.service.impl.InterfaceServiceImpl;
 import com.imyuanxiao.yuanapicommon.enums.ResultCode;
@@ -74,11 +75,11 @@ public class InterfaceController {
         return ACTION_SUCCESSFUL;
     }
 
-    @GetMapping("/setStatus/{id}/{status}")
+    @PutMapping("/setStatus")
     @ApiOperation(value = "上线/下线接口")
     @AuthCheck(mustRole = {"admin"})
-    public String setInterfaceStatus(@PathVariable("id") Long id, @PathVariable("status") int status){
-        interfaceService.setInterfaceStatusById(id, status);
+    public String setInterfaceStatus(@RequestBody InterfaceSetStatusParam param){
+        interfaceService.setInterfaceStatusById(param.getId(), param.getStatus());
         return ACTION_SUCCESSFUL;
     }
 
