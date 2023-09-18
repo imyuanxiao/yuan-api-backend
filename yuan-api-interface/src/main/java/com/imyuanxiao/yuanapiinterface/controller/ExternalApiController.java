@@ -33,6 +33,16 @@ public class ExternalApiController {
     }
 
     /**
+     * 短网址生成
+     */
+    @PostMapping("/api/long2dwz")
+    public String long2dwz(HttpServletRequest request) {
+        String url = "https://api.uomg.com/api/long2dwz";
+        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
+        return invokeExternalApi(url, body);
+    }
+
+    /**
      * 土味情话
      */
     @PostMapping("/api/qinghua")
@@ -40,6 +50,19 @@ public class ExternalApiController {
             String url = "https://api.uomg.com/api/rand.qinghua";
             String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
             return invokeExternalApi(url, body);
+    }
+
+    /**
+     * 随机音乐
+     */
+    @PostMapping("/api/rand.music")
+    public String randMusic(HttpServletRequest request) {
+        String url = "https://api.uomg.com/api/rand.music";
+        String body = URLUtil.decode(request.getHeader("body"), CharsetUtil.CHARSET_UTF_8);
+        try(HttpResponse httpResponse = HttpRequest.get(url + "?" + body)
+                .execute()){
+            return httpResponse.body();
+        }
     }
 
 }

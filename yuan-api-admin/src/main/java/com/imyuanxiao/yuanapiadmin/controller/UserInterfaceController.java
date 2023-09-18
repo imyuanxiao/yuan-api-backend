@@ -52,7 +52,7 @@ public class UserInterfaceController {
      */
     @PostMapping("/invokeInterface")
     public String onlineInvokeInterface(@RequestBody InvokeInterfaceParam param){
-        String result = new YuanApiManager().invokeInterface(
+        return new YuanApiManager().invokeInterface(
                 param.getAccessKey(),
                 param.getSecretKey(),
                 param.getId(),
@@ -60,7 +60,6 @@ public class UserInterfaceController {
                 param.getUrl(),
                 param.getPath(),
                 param.getRequestParams());
-        return result;
     }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class DyeDataInterceptor implements HandlerInterceptor {
 
     private static final String DYE_DATA_HEADER = "X-Dye-Data";
-    private static final String DYE_DATA_VALUE = "reflux";
+    private static final String DYE_DATA_VALUE = "yuanxiao";
 
     /**
      * 调用接口时，如果发现是未经过网关染色的请求，不予响应

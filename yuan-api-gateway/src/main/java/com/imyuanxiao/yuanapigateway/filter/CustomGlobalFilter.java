@@ -42,7 +42,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
      */
     public static final List<String> IP_WHITE_LIST = Arrays.asList("127.0.0.1", "0:0:0:0:0:0:0:1");
     private static final String DYE_DATA_HEADER = "X-Dye-Data";
-    private static final String DYE_DATA_VALUE = "reflux";
+    private static final String DYE_DATA_VALUE = "yuanxiao";
     private static final String KEY_PREFFIX = "User_access:nonce:";
 
     @DubboReference
@@ -92,8 +92,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         log.info("接口路径：{}", interfacePath);
 
         // 请求参数不完整
-        if (StrUtil.isEmpty(nonce)
-                || StrUtil.isEmpty(sign)
+        // StrUtil.isEmpty(nonce)
+        if (StrUtil.isEmpty(sign)
                 || StrUtil.isEmpty(timestamp)
                 || StrUtil.isEmpty(interfaceMethod)
                 || StrUtil.isEmpty(interfaceIdStr)
