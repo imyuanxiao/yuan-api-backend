@@ -1,16 +1,8 @@
 package com.imyuanxiao.yuanapicommon.service;
 
-import com.imyuanxiao.yuanapicommon.model.entity.User;
 import com.imyuanxiao.yuanapicommon.model.entity.UserInterface;
 
 public interface InnerUserInterfaceService {
-
-//    /**
-//     * 通过accessKey查看是否已分配用户
-//     * @param accessKey accessKey
-//     * @return User 用户信息
-//     */
-//    User getInvokeUser(String accessKey);
 
     /**
      * 通过accessKey查看是否已分配用户
@@ -18,14 +10,6 @@ public interface InnerUserInterfaceService {
      * @return 用户接口关系
      */
     UserInterface getInvokeUserInterface(String accessKey);
-
-
-//    /**
-//     * 通过accessKey查看是否有对应的secretKey
-//     * @param accessKey accessKey
-//     * @return secretKey
-//     */
-//    String getSecretKey(String accessKey);
 
     /**
      * 调用接口统计

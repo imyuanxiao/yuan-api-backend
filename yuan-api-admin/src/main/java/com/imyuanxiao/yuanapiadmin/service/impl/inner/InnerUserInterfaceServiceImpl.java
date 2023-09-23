@@ -9,12 +9,14 @@ import com.imyuanxiao.yuanapiadmin.service.InterfaceService;
 import com.imyuanxiao.yuanapiadmin.service.UserService;
 
 import com.imyuanxiao.yuanapiadmin.service.impl.InterfaceServiceImpl;
+import com.imyuanxiao.yuanapiadmin.service.impl.UserInterfaceHistoryServiceImpl;
 import com.imyuanxiao.yuanapiadmin.service.impl.UserServiceImpl;
 import com.imyuanxiao.yuanapicommon.enums.ResultCode;
 import com.imyuanxiao.yuanapicommon.exception.ApiException;
 import com.imyuanxiao.yuanapicommon.model.entity.Interface;
 import com.imyuanxiao.yuanapicommon.model.entity.User;
 import com.imyuanxiao.yuanapicommon.model.entity.UserInterface;
+import com.imyuanxiao.yuanapicommon.model.entity.UserInterfaceHistory;
 import com.imyuanxiao.yuanapicommon.service.InnerUserInterfaceService;
 import com.imyuanxiao.yuanapicommon.utils.CommonConst;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -31,6 +33,9 @@ public class InnerUserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapp
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private UserInterfaceHistoryServiceImpl userInterfaceHistoryService;
 
     @Override
     public UserInterface getInvokeUserInterface(String accessKey) {
@@ -64,7 +69,12 @@ public class InnerUserInterfaceServiceImpl extends ServiceImpl<UserInterfaceMapp
         updateWrapper.eq(UserInterface::getInterfaceId, interfaceId)
                 .eq(UserInterface::getUserId, userId)
                 .setSql("left_num = left_num - 1");
+        // 用户接口关系表中更新接口剩余次数
         int rowsUpdated = baseMapper.update(null, updateWrapper);
+        // 用户接口调用记录表中更新调用记录
+        userInterfaceHistoryService.save(
+          new UserInterfaceHistory().setInterfaceId(interfaceId).setUserId(userId)
+        );
         return rowsUpdated > 0;
     }
 

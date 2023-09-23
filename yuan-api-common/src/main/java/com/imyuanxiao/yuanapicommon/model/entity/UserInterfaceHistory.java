@@ -1,6 +1,5 @@
 package com.imyuanxiao.yuanapicommon.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户_接口调用历史表
@@ -41,12 +41,8 @@ public class UserInterfaceHistory implements Serializable {
     @TableField(value = "result")
     private Integer result;
 
-    /**
-     * 逻辑删除（0-未删除，1-已删除）
-     */
-    //@TableLogic
-    @TableField(value = "is_deleted")
-    private Integer isDeleted;
+    @TableField(value = "created_time")
+    private Date createdTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

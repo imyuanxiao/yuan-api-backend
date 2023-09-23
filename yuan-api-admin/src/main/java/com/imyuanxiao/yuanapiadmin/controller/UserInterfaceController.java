@@ -4,15 +4,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.imyuanxiao.yuanapiadmin.model.param.InterfacePageParam;
 import com.imyuanxiao.yuanapiadmin.model.param.InvokeInterfaceParam;
 import com.imyuanxiao.yuanapiadmin.model.vo.UserInterfacePageVO;
+import com.imyuanxiao.yuanapiadmin.service.impl.UserInterfaceHistoryServiceImpl;
 import com.imyuanxiao.yuanapiadmin.service.impl.UserInterfaceServiceImpl;
 import com.imyuanxiao.yuanapiclientsdk.client.YuanApiManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Validated
@@ -23,6 +25,9 @@ public class UserInterfaceController {
 
     @Autowired
     private UserInterfaceServiceImpl userInterfaceService;
+
+    @Autowired
+    private UserInterfaceHistoryServiceImpl userInterfaceHistoryService;
 
     /**
      * 申请接口，默认给予500次调用次数，
@@ -61,5 +66,12 @@ public class UserInterfaceController {
                 param.getPath(),
                 param.getRequestParams());
     }
+
+
+    @GetMapping("/chart/callTrend")
+    public List<Integer> getChartCallTrend(){
+        return userInterfaceHistoryService.getChartCallTrend();
+    };
+
 
 }
